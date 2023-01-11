@@ -1,0 +1,1 @@
+cd C:\Git\RSM\backend\API && dotnet clean && dotnet build && dotnet run

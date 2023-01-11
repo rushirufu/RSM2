@@ -1,0 +1,1 @@
+cd C:\Git\RSM\frontend && npm start

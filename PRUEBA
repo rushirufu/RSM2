@@ -1,0 +1,342 @@
+{
+  "ConnectionStrings": {
+    "DatabaseFirst": "Server=FIMED-IT-PC01\\SQLEXPRESS;Database=SWF;Trusted_Connection=True;"
+  },
+  "ConnectionStrings": {
+    "DatabaseFirst": "Server=DESKTOP-5OBT54B\\SQLEXPRESS;Database=SWF;Trusted_Connection=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+
+
+[HttpPatch]
+[Route("actualizar/{id:int}")]
+public async Task<ActionResult> Actualizar(int id, [FromBody] JsonPatchDocument<DtoPatchActivo> dtoPatchActivo)
+{
+    if (dtoPatchActivo == null)
+    {
+        return BadRequest();
+    }
+
+    var activoDB = await context.Activos.FirstOrDefaultAsync(x => x.Id == id);
+
+    if (activoDB == null)
+    {
+        return NotFound();
+    }
+
+    var dtoActivo = mapper.Map<DtoPatchActivo>(activoDB);
+
+    dtoPatchActivo.ApplyTo(dtoActivo, ModelState);
+
+    var esValido = TryValidateModel(dtoActivo);
+
+    if (!esValido)
+    {
+        return BadRequest(ModelState);
+    }
+    mapper.Map(dtoActivo, activoDB);
+    await context.SaveChangesAsync();
+    return NoContent();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+  "id": 0,
+  "idInformacion": 0,
+  "idDepartamento": 0,
+  "idUnidad": 0,
+  "idLocalidad": 0,
+  "idActivoTipo": 0,
+  "idActivoTipoCategoria": 0,
+  "idCodigo": 0,
+  "marca": "string",
+  "color": "string",
+  "modelo": "string",
+  "componentes": "string",
+  "serial": "string",
+  "condicion": true,
+  "observaciones": "string",
+  "fechaCreacion": "2022-10-03T00:56:11.027Z"
+
+
+
+
+
+
+
+
+
+
+              {/* <h2>últimos activos registrados</h2> */}
+
+              {/* <TableContainer>
+                <Table>
+                  <Thead>
+                    <Tr>
+                      <Th>ID</Th>
+                      <Th>Codigo</Th>
+                      <Th>Marca</Th>
+                      <Th>Modelo</Th>
+                      <Th>Serial</Th>
+                      <Th></Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {Array.isArray(estado_activo.activos)
+                      ? estado_activo.activos.map((activo, index) => (
+                          <Tr key={index}>
+                            <Td>{activo.id}</Td>
+                            <Td>{activo.idCodigo}</Td>
+                            <Td>{activo.marca}</Td>
+                            <Td>{activo.modelo}</Td>
+                            <Td>{activo.serial}</Td>
+                            <Td>
+                              <ButtonContainer>
+                                <ButtonLink
+                                  to={`/activo/editar/${activo.id}/`}
+                                >
+                                  <IconOnButton
+                                    icon={"clarity:edit-solid"}
+                                  />
+                                  <span>Editar</span>
+                                </ButtonLink>
+                                <ButtonLink
+                                  to={`/x/activo/editar/${activo.id}/`}
+                                >
+                                  <IconOnButton
+                                    icon={"ic:baseline-delete"}
+                                    color={"red"}
+                                  />
+                                  <span>Eliminar</span>
+                                </ButtonLink>
+                                <br />
+                                <br />
+                              </ButtonContainer>
+                            </Td>
+                          </Tr>
+                        ))
+                      : null}
+                  </Tbody>
+                </Table>
+              </TableContainer> */}
+
+
+
+*****************************
+    1- Perfecto estado
+2- Deteriorado
+3- Fuera de servicio
+
+
+
+
+
+-- Departamentos
+INSERT INTO Compania.Departamento
+    (
+    [Nombre]
+    )
+VALUES
+('Presidencia'),
+('Gerencia General'),
+('Finanzas'),
+('Cuentas por cobrar'),
+('Mercadeo'),
+('Gestión Humana'),
+('Ventas'),
+('Tecnologia'),
+('Coordinador de obras'),
+('Desarrollo de productos'),
+('Producción'),
+('Diseño y Repuesto'),
+('Transportarción'),
+('Almacen y Despacho'),
+('Mantenimiento')
+GO
+    1('Terreno'),
+    2('Edificación'),
+    3('Mobiliario y Equipos'),
+    4('Equipos de Transporte'),
+    5('Equipos Tecnológiocos'),
+    6('Otros Mobiliarios y Equipos'),
+    7('Maquinarias y Equipos'),
+    8('Otros')
+
+
+(1, 'Urbano'),
+(1, 'Rural'),
+(2, 'N/A'),
+(3,'Escritorio'),
+(3,'Estantes'),
+(3,'Sillas de Escritorio'),
+(3,'Sillas Colectivas'),
+(3,'Credenza'),
+(3,'Archivo'),
+(3,'Counters'),
+(3,'Bancadas'),
+(3,'Gabinetes'),
+(3,'Mesas'),
+(3,'Sillon ejecutivo'),
+(3,'Escritorio'),
+(3,'Librero'),
+(3,'sumadora'),
+(3,'Sillas corredizas'),
+(3,'Mesa'),
+(3,'Credenza'),
+(4,'Vehiculos Livianos '),
+(4,'Vehiculos Pesados'),
+(5,'Laptops'),
+(5,'Computadora de Escritorio'),
+(5,'Handheld'),
+(5,'Servidores'),
+(5,'Televisores'),
+(5,'Telefono'),
+(5,'Teclado'),
+(5,'UPS'),
+(5,'CPU'),
+(5,'Impresora'),
+(5,'Copiadora'),
+(5,'Modem'),
+(6,'Sistema de Seguridad'),
+(6,'Sistema de seguridad de alarmas'),
+(7,'Envases de Pintura'),
+(7,'Martillo'),
+(7,'Clavos '),
+(7,'Grapas'),
+(7,'Taladros'),
+(7,'Lijas '),
+(7,'Cola blanca/cola de carpintero'),
+(7,'Tornillos'),
+(8,'Maquina Mezcladora'),
+(8,'Maquina de Dispersion'),
+(8,'Maquina Molienda'),
+(8,'Maquina de Envasar'),
+(8,'Aire Acondicionado'),
+(8,'Sierra Electrica'),
+(8,'Maquina de cortar madera'),
+(8,'Maquina para lijar/limar'),
+(8,'Maquina para pintar'),
+(8,'Sepillo 4 caras moldeador'),
+(8,'Escuadrar'),
+(8,'Aire acondicionado'),
+(8,'Maquina de Adictivo'),
+(9'Extintores'),
+(9'Planta Electrica'),
+(9'Telas'),
+(9'Abanicos'),
+
+
+
+
+
+
+
+
+**********************
+
+
+
+-- ActivoTipo (Categorias)
+INSERT INTO Inventario.ActivoTipo
+    (
+    [Nombre]
+    )
+VALUES
+    ('Terreno'),
+    ('Edificación'),
+    ('Mobiliario y Equipos'),
+    ('Equipos de Transporte'),
+    ('Equipos Tecnológiocos'),
+    ('Otros Mobiliarios y Equipos'),
+    ('Herramientas'),
+    ('Maquinarias y Equipos'),
+    ('Otros')
+GO
+
+INSERT INTO Inventario.ActivoTipoCategoria
+    (
+    [IdActivoTipo],
+    [Nombre]
+    )
+VALUES
+    (1, 'Urbano'),
+    (1, 'Rural'),
+    (2, 'N/A'),
+    (3, 'Escritorio'),
+    (3, 'Estantes'),
+    (3, 'Sillas de Escritorio'),
+    (3, 'Sillas Colectivas'),
+    (3, 'Credenza'),
+    (3, 'Archivo'),
+    (3, 'Counters'),
+    (3, 'Bancadas'),
+    (3, 'Gabinetes'),
+    (3, 'Sillon ejecutivo'),
+    (3, 'Librero'),
+    (3, 'sumadora'),
+    (3, 'Sillas corredizas'),
+    (3, 'Mesa'),
+    (4, 'Vehiculos Livianos '),
+    (4, 'Vehiculos Pesados'),
+    (5, 'Laptops'),
+    (5, 'Computadora de Escritorio'),
+    (5, 'Handheld'),
+    (5, 'Servidores'),
+    (5, 'Televisores'),
+    (5, 'Telefono'),
+    (5, 'Teclado'),
+    (5, 'UPS'),
+    (5, 'CPU'),
+    (5, 'Impresora'),
+    (5, 'Copiadora'),
+    (5, 'Modem'),
+    (6, 'Sistema de Seguridad'),
+    (6, 'Sistema de seguridad de alarmas'),
+    (7, 'Envases de Pintura'),
+    (7, 'Martillo'),
+    (7, 'Clavos'),
+    (7, 'Grapas'),
+    (7, 'Taladros'),
+    (7, 'Lijas '),
+    (7, 'Cola blanca/cola de carpintero'),
+    (7, 'Tornillos'),
+    (8, 'Maquina Mezcladora'),
+    (8, 'Maquina de Dispersion'),
+    (8, 'Maquina Molienda'),
+    (8, 'Maquina de Envasar'),
+    (8, 'Aire Acondicionado'),
+    (8, 'Sierra Electrica'),
+    (8, 'Maquina de cortar madera'),
+    (8, 'Maquina para lijar/limar'),
+    (8, 'Maquina para pintar'),
+    (8, 'Sepillo 4 caras moldeador'),
+    (8, 'Escuadrar'),
+    (8, 'Maquina de Adictivo'),
+    (9, 'Extintores'),
+    (9, 'Planta Electrica'),
+    (9, 'Telas'),
+    (9, 'Abanicos')
+go
