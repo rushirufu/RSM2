@@ -6,6 +6,8 @@ import ServicioDepartamento from "../services/ServicioDepartamento";
 import ServicioLocalidad from "../services/ServicioLocalidad";
 import ServicioUnidad from "../services/ServicioUnidad";
 import ServicioActivoTipo from "../services/ServicioActivoTipo";
+import ServicioArea from "../services/ServicioArea";
+
 // import Console from "../components/Console";
 import ServicioInformacion from "../services/ServicioInformacion";
 import ServicioActivoTipoCategoria from "../services/ServicioActivoTipoCategoria";
@@ -43,6 +45,7 @@ const PageActivoHome = function () {
   const [compania, setCompania] = useState("0");
   const [departamento, setDepartamento] = useState(0);
   const [localidad, setLocalidad] = useState(0);
+  const [area, setArea] = useState(0);
   const [unidad, setUnidad] = useState(0);
   const [activotipo, setActivoTipo] = useState(0);
   const [activotipocatego, setActivoTipoCatego] = useState(0);
@@ -65,6 +68,7 @@ const PageActivoHome = function () {
   const [estado_activotipos, setEstado_ActivoTipo] = useState([]);
   const [estado_activotipoCat, setEstado_activoCat] = useState([]);
   const [estado_condicion, setEstado_Condicion] = useState([]);
+  const [estado_area, setEstado_Area] = useState([]);
 
   // state
   const [state, setState] = useState();
@@ -124,6 +128,17 @@ const PageActivoHome = function () {
     }
   };
 
+  const ListarAreas = async () => {
+    // areas
+    try {
+      await ServicioArea.ObtenerLista().then((response) => {
+        setEstado_Area({ areas: response.data });
+      });
+    } catch (error) {
+    } finally {
+    }
+  };
+
   const ListarActivoTipo = async () => {
     // ActivoTipo
     try {
@@ -166,6 +181,7 @@ const PageActivoHome = function () {
     ListarActivoTipo();
     ListarActivoCategoria();
     ListarCondicion();
+    ListarAreas();
   }
 
   useEffect(function () {
@@ -188,6 +204,10 @@ const PageActivoHome = function () {
 
   const manejadorLocalidad = (e) => {
     setLocalidad(e.target.value);
+  };
+
+  const manejadorArea = (e) => {
+    setArea(e.target.value);
   };
 
   const manejadorActivoTipoCategoria = (e) => {
@@ -248,6 +268,7 @@ const PageActivoHome = function () {
       observaciones: observacion,
       cantidad: cantidad,
       idCondicion: condicion,
+      idArea: area,
     };
 
     let Data = JSON.stringify(formulario);
@@ -271,6 +292,7 @@ const PageActivoHome = function () {
     setSerial("");
     setObservacion("");
     setCantidad(1);
+    setArea(0);
   };
 
   const columnas = [
@@ -347,7 +369,6 @@ const PageActivoHome = function () {
                 <h2>Datos del activo</h2>
 
                 <DivInputBox>
-                  <DivInput></DivInput>
                   <DivInput>
                     {/* Companias */}
                     <DivSelect>
@@ -413,6 +434,29 @@ const PageActivoHome = function () {
                             -- Seleccionar --
                           </option>
                           {estado_localidad.localidades.map((x) => (
+                            <option key={x.id} value={x.id}>
+                              {x.nombre}
+                            </option>
+                          ))}
+                        </Select>
+                      ) : null}
+                    </DivSelect>
+
+                    {/* area */}
+                    <DivSelect>
+                      <Label htmlFor="idArea">Area:</Label>
+                      {Array.isArray(estado_area.areas) ? (
+                        <Select
+                          className={area != "0" ? "Activated" : null}
+                          name="idArea"
+                          id="idArea"
+                          value={area}
+                          onChange={manejadorArea}
+                        >
+                          <option key="0" value="0">
+                            -- Seleccionar --
+                          </option>
+                          {estado_area.areas.map((x) => (
                             <option key={x.id} value={x.id}>
                               {x.nombre}
                             </option>

@@ -29,10 +29,10 @@ dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson --version 6.0.8
 ## Database First
 ```hs
 ## casa
-dotnet ef dbcontext scaffold "Server=sql5106.site4now.net;Database=db_aae172_inventariorsmrd;User Id=db_aae172_inventariorsmrd_admin;Password=rsm2024**;" Microsoft.EntityFrameworkCore.SqlServer -o Models -f
+
 
 ## trabajo
-dotnet ef dbcontext scaffold "Server=sql5106.site4now.net;Database=db_aae172_inventariorsmrd;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -c WebAppDbContext -f
+dotnet ef dbcontext scaffold "Server=sql5106.site4now.net;Database=db_aae172_inventariorsmrd;User Id=db_aae172_inventariorsmrd_admin;password=rsm2024**" Microsoft.EntityFrameworkCore.SqlServer -o Models -c WebAppDbContext -f
 ````
 
 dotnet clean && dotnet build && dotnet run

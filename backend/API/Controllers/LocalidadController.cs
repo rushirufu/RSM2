@@ -34,18 +34,18 @@ public class LocalidadController : ControllerBase
         }
     }
 
-    [HttpGet("listar/")]
-    public async Task<ActionResult<List<DtoLecturaLocalidad>>> ListarLocalidades()
+    [HttpGet("listarAreas/")]
+    public async Task<ActionResult<List<DtoLecturaAreas>>> ListarAreas()
     {
         try
         {
-            List<Localidad> ListaLocalidad = await context.Localidads.OrderBy(x => x.Nombre).ToListAsync();
-            List<DtoLecturaLocalidad> DtoListaLocalidad = mapper.Map<List<DtoLecturaLocalidad>>(ListaLocalidad);
-            return DtoListaLocalidad;
+            List<Area> ListaArea = await context.Areas.OrderBy(x => x.Nombre).ToListAsync();
+            List<DtoLecturaAreas> DtoListaAreas = mapper.Map<List<DtoLecturaAreas>>(ListaArea);
+            return DtoListaAreas;
         }
         catch (Exception ex)
         {
-            throw new Exception("Something wrong happened in the ListarLocalides:", ex);
+            throw new Exception("Something wrong happened in the ListarAreas:", ex);
         }
     }
 

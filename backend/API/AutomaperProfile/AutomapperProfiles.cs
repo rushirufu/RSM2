@@ -18,6 +18,7 @@ namespace API.AutomapperProfiles
             CreateMap<Departamento, DtoLecturaDepartamento>();
             CreateMap<Unidad, DtoLecturaUnidad>();
             CreateMap<Localidad, DtoLecturaLocalidad>();
+            CreateMap<Area, DtoLecturaAreas>();
             CreateMap<ActivoTipo, DtoLecturaActivoTipo>();
             CreateMap<ActivoTipoCategorium, DtoLecturaActivoTipoCategorium>();
             CreateMap<Inventario, DtoInventario>();

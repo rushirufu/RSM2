@@ -19,6 +19,7 @@ namespace API.Models
         public virtual DbSet<Activo> Activos { get; set; }
         public virtual DbSet<ActivoTipo> ActivoTipos { get; set; }
         public virtual DbSet<ActivoTipoCategorium> ActivoTipoCategoria { get; set; }
+        public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Condicion> Condicions { get; set; }
         public virtual DbSet<Departamento> Departamentos { get; set; }
         public virtual DbSet<Informacion> Informacions { get; set; }
@@ -29,14 +30,14 @@ namespace API.Models
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<ViewActivo> ViewActivos { get; set; }
 
-//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//         {
-//             if (!optionsBuilder.IsConfigured)
-//             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                 optionsBuilder.UseSqlServer("Server=FIMED-IT-PC01\\SQLEXPRESS;Database=SWF;Trusted_Connection=True;");
-//             }
-//         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=sql5106.site4now.net;Database=db_aae172_inventariorsmrd;User Id=db_aae172_inventariorsmrd_admin;password=rsm2024**");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,6 +77,11 @@ namespace API.Models
                     .WithMany(p => p.Activos)
                     .HasForeignKey(d => d.IdActivoTipoCategoria)
                     .HasConstraintName("FK_ActivoTipoCategoria_ID");
+
+                entity.HasOne(d => d.IdAreaNavigation)
+                    .WithMany(p => p.Activos)
+                    .HasForeignKey(d => d.IdArea)
+                    .HasConstraintName("FK_Area_ID");
 
                 entity.HasOne(d => d.IdCondicionNavigation)
                     .WithMany(p => p.Activos)
@@ -140,6 +146,18 @@ namespace API.Models
                     .WithMany(p => p.ActivoTipoCategoria)
                     .HasForeignKey(d => d.IdActivoTipo)
                     .HasConstraintName("FK_ActivoTipoCategoriaID");
+            });
+
+            modelBuilder.Entity<Area>(entity =>
+            {
+                entity.ToTable("Area", "Inventario");
+
+                entity.HasIndex(e => e.Nombre, "UNIQ_Area")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Nombre).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Condicion>(entity =>

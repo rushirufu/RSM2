@@ -44,15 +44,6 @@ CREATE TABLE [Compania].[Informacion]
 )
 GO
 
--- TABLE Areas 
-CREATE TABLE Inventario.Area
-(
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre NVARCHAR(100) null
-);
-
-go
-
 -- ACTIVO
 CREATE TABLE [Inventario].[Activo]
 (
@@ -62,6 +53,7 @@ CREATE TABLE [Inventario].[Activo]
     [IdLocalidad] INT,
     [IdActivoTipoCategoria] INT,
     [IdCodigo] VARCHAR(100),
+	[IdArea] INT,
     [Marca] VARCHAR(100) NULL,
     [Color] VARCHAR(100) NULL,
     [Modelo] VARCHAR(100) NULL,
@@ -72,6 +64,14 @@ CREATE TABLE [Inventario].[Activo]
     CONSTRAINT PK_Activo_ID PRIMARY KEY (Id)
 )
 
+-- TABLE Areas 
+CREATE TABLE Inventario.Area
+(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(100) null
+	CONSTRAINT UNIQ_Area UNIQUE(Nombre),
+);
+go
 
 
 -- Historial Inventarios
@@ -181,7 +181,8 @@ ADD
 	CONSTRAINT FK_Departamento_ID FOREIGN KEY (IdDepartamento) REFERENCES [Compania].[Departamento](Id),
 	CONSTRAINT FK_Localidad_ID FOREIGN KEY (IdLocalidad) REFERENCES [Compania].[Localidad](Id),
 	CONSTRAINT FK_ActivoTipoCategoria_ID FOREIGN KEY (IdActivoTipoCategoria) REFERENCES [Inventario].[ActivoTipoCategoria](Id),
-    CONSTRAINT FK_Condicion_ID FOREIGN KEY (IdCondicion) REFERENCES [Inventario].[Condicion](Id)
+    CONSTRAINT FK_Condicion_ID FOREIGN KEY (IdCondicion) REFERENCES [Inventario].[Condicion](Id),
+	CONSTRAINT FK_Area_ID FOREIGN KEY (IdArea) REFERENCES [Inventario].[Area](Id)
 GO
 
 ALTER TABLE [Inventario].[ActivoTipoCategoria]
