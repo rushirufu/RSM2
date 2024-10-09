@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Consola from "../components/Consola";
-import {
-  Content,
-  ContentBody,
-  ContentHead,
-  Wrapper,
-} from "../style/Content";
+import { Content, ContentBody, ContentHead, Wrapper } from "../style/Content";
 import ServicioDepartamento from "../services/ServicioDepartamento";
 import ServicioLocalidad from "../services/ServicioLocalidad";
 import ServicioUnidad from "../services/ServicioUnidad";
@@ -135,11 +130,9 @@ const PageActivoEditar = function () {
   const ListarActivoCategoria = async () => {
     // ActivoTipo Categoria
     try {
-      await ServicioActivoTipoCategoria.ObtenerLista().then(
-        (response) => {
-          setEstado_activoCat({ categorias: response.data });
-        }
-      );
+      await ServicioActivoTipoCategoria.ObtenerLista().then((response) => {
+        setEstado_activoCat({ categorias: response.data });
+      });
     } catch (error) {
     } finally {
     }
@@ -321,9 +314,7 @@ const PageActivoEditar = function () {
   return (
     <Wrapper>
       <Content>
-        <ContentHead>
-          {/* <Consola stateName={codigo} /> */}
-        </ContentHead>
+        <ContentHead>{/* <Consola stateName={codigo} /> */}</ContentHead>
         <ContentBody>
           <DivRegistroActivo>
             <ContedorInput>
@@ -337,9 +328,7 @@ const PageActivoEditar = function () {
                     {Array.isArray(estado_dato.companias) ? (
                       <Select
                         className={
-                          parseInt(compania) !== 0
-                            ? "Activated"
-                            : null
+                          parseInt(compania) !== 0 ? "Activated" : null
                         }
                         name="idInformacion"
                         id="idInformacion"
@@ -359,16 +348,10 @@ const PageActivoEditar = function () {
                   </DivSelect>
                   {/* Departamentos */}
                   <DivSelect>
-                    <Label htmlFor="idDepartamento">
-                      Departamento:
-                    </Label>
-                    {Array.isArray(
-                      estado_departamento.departamentos
-                    ) ? (
+                    <Label htmlFor="idDepartamento">Departamento:</Label>
+                    {Array.isArray(estado_departamento.departamentos) ? (
                       <Select
-                        className={
-                          departamento != "0" ? "Activated" : null
-                        }
+                        className={departamento != "0" ? "Activated" : null}
                         name="idDepartamento"
                         id="idDepartamento"
                         value={departamento}
@@ -377,13 +360,11 @@ const PageActivoEditar = function () {
                         <option key="0" value="0">
                           -- Seleccionar --
                         </option>
-                        {estado_departamento.departamentos.map(
-                          (x) => (
-                            <option key={x.id} value={x.id}>
-                              {x.nombre}
-                            </option>
-                          )
-                        )}
+                        {estado_departamento.departamentos.map((x) => (
+                          <option key={x.id} value={x.id}>
+                            {x.nombre}
+                          </option>
+                        ))}
                       </Select>
                     ) : null}
                   </DivSelect>
@@ -395,9 +376,7 @@ const PageActivoEditar = function () {
                     <Label htmlFor="idLocalidad">Localidad:</Label>
                     {Array.isArray(estado_localidad.localidades) ? (
                       <Select
-                        className={
-                          localidad != "0" ? "Activated" : null
-                        }
+                        className={localidad != "0" ? "Activated" : null}
                         name="idLocalidad"
                         id="idLocalidad"
                         value={localidad}
@@ -418,14 +397,10 @@ const PageActivoEditar = function () {
                 <DivInput>
                   {/* Activo Tipo */}
                   <DivSelect>
-                    <Label htmlFor="activotipo">
-                      Tipo de activo:
-                    </Label>
+                    <Label htmlFor="activotipo">Tipo de activo:</Label>
                     {Array.isArray(estado_activotipos.activoTipos) ? (
                       <Select
-                        className={
-                          activotipo != "0" ? "Activated" : null
-                        }
+                        className={activotipo != "0" ? "Activated" : null}
                         name="activotipo"
                         id="activotipo"
                         value={activotipo}
@@ -444,16 +419,10 @@ const PageActivoEditar = function () {
                   </DivSelect>
                   {/* Activo Tipo Categoria */}
                   <DivSelect>
-                    <Label htmlFor="idActivoTipoCategoria">
-                      Categoría:
-                    </Label>
-                    {Array.isArray(
-                      estado_activotipoCat.categorias
-                    ) ? (
+                    <Label htmlFor="idActivoTipoCategoria">Categoría:</Label>
+                    {Array.isArray(estado_activotipoCat.categorias) ? (
                       <Select
-                        className={
-                          activotipocatego != "0" ? "Activated" : null
-                        }
+                        className={activotipocatego != "0" ? "Activated" : null}
                         name="idActivoTipoCategoria"
                         id="idActivoTipoCategoria"
                         value={activotipocatego}
@@ -464,8 +433,7 @@ const PageActivoEditar = function () {
                         </option>
                         {estado_activotipoCat.categorias
                           .filter(
-                            (item) =>
-                              item.idActivoTipo === Number(activotipo)
+                            (item) => item.idActivoTipo === Number(activotipo)
                           )
                           .map((x) => (
                             <option key={x.id} value={x.id}>
@@ -554,7 +522,7 @@ const PageActivoEditar = function () {
                   </Select>
                 ) : null}
               </DivSelect>
-              <InputGroup
+              {/* <InputGroup
                 input_label={"Asignado a"}
                 input_name={"asignado"}
                 input_type={"text"}
@@ -573,7 +541,7 @@ const PageActivoEditar = function () {
                 state_name={componente}
                 set_state_name={setComponente}
                 on_change={manejadorComponente}
-              />
+              /> */}
               <TextArea
                 input_label={"Observaciones"}
                 input_name={"observacion"}
