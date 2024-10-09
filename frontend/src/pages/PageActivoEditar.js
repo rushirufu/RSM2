@@ -28,6 +28,7 @@ import TextArea from "../components/TextArea";
 
 import { useParams } from "react-router-dom";
 import ServicioCondicion from "../services/ServicioCondicion";
+import ServicioArea from "../services/ServicioArea";
 
 const PageActivoEditar = function () {
   let { Id } = useParams();
@@ -48,7 +49,7 @@ const PageActivoEditar = function () {
   const [codigo, setCodigo] = useState(0);
   const [asignado, setAsignado] = useState("");
   const [condicion, setCondicion] = useState("0");
-
+  const [area, setArea] = useState(0);
   // Data desde la base de dato
   const [estado_activo, setEstado_Activo] = useState([]);
   const [estado_dato, setEstado_Dato] = useState([]);
@@ -58,6 +59,7 @@ const PageActivoEditar = function () {
   const [estado_activotipos, setEstado_ActivoTipo] = useState([]);
   const [estado_activotipoCat, setEstado_activoCat] = useState([]);
   const [estado_condicion, setEstado_Condicion] = useState([]);
+  const [estado_area, setEstado_Area] = useState([]);
 
   // paginacion
 
@@ -116,6 +118,17 @@ const PageActivoEditar = function () {
     }
   };
 
+  const ListarArea = async () => {
+    // area
+    try {
+      await ServicioArea.ObtenerLista().then((response) => {
+        setEstado_Area({ areas: response.data });
+      });
+    } catch (error) {
+    } finally {
+    }
+  };
+
   const ListarActivoTipo = async () => {
     // ActivoTipo
     try {
@@ -157,7 +170,7 @@ const PageActivoEditar = function () {
     ListarActivoTipo();
     ListarActivoCategoria();
     ListarCondicion();
-
+    ListarArea();
     try {
       await ServicioActivo.BuscarPorID(Id).then((response) => {
         const dataActivo = response.data;
@@ -199,6 +212,7 @@ const PageActivoEditar = function () {
         setCodigo(dataActivo.idCodigo);
         setCondicion(dataActivo.idCondicion);
         setAsignado(dataActivo.asignado);
+        setArea(dataActivo.idArea);
       });
     } catch (error) {
     } finally {
@@ -269,7 +283,9 @@ const PageActivoEditar = function () {
   const manejadorAsignado = (e) => {
     setAsignado(e.target.value);
   };
-
+  const manejadorArea = (e) => {
+    setArea(e.target.value);
+  };
   const manejadorSumit = function (e) {
     e.preventDefault();
     let formulario = {
@@ -287,6 +303,7 @@ const PageActivoEditar = function () {
       observaciones: observacion,
       idCondicion: condicion,
       asignado: asignado,
+      idArea: area,
     };
 
     let Data = JSON.stringify(formulario);
@@ -370,8 +387,8 @@ const PageActivoEditar = function () {
                   </DivSelect>
                 </DivInput>
 
+                {/* Localidad */}
                 <DivInput>
-                  {/* Localidad */}
                   <DivSelect>
                     <Label htmlFor="idLocalidad">Localidad:</Label>
                     {Array.isArray(estado_localidad.localidades) ? (
@@ -386,6 +403,29 @@ const PageActivoEditar = function () {
                           -- Seleccionar --
                         </option>
                         {estado_localidad.localidades.map((x) => (
+                          <option key={x.id} value={x.id}>
+                            {x.nombre}
+                          </option>
+                        ))}
+                      </Select>
+                    ) : null}
+                  </DivSelect>
+
+                  {/* area */}
+                  <DivSelect>
+                    <Label htmlFor="idArea">Area:</Label>
+                    {Array.isArray(estado_area.areas) ? (
+                      <Select
+                        className={area != "0" ? "Activated" : null}
+                        name="idArea"
+                        id="idArea"
+                        value={area}
+                        onChange={manejadorArea}
+                      >
+                        <option key="0" value="0">
+                          -- Seleccionar --
+                        </option>
+                        {estado_area.areas.map((x) => (
                           <option key={x.id} value={x.id}>
                             {x.nombre}
                           </option>

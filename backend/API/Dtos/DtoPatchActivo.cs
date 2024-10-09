@@ -7,6 +7,7 @@ namespace API.Dtos
         public int? IdDepartamento { get; set; }
         public int? IdUnidad { get; set; }
         public int? IdLocalidad { get; set; }
+        public int? IdArea { get; set; }
         public int? IdActivoTipo { get; set; }
         public int? IdActivoTipoCategoria { get; set; }
         public string Marca { get; set; }

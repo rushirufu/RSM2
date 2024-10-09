@@ -393,5 +393,5 @@ GO
 
 
 
-
+DBCC CHECKIDENT ('Inventario.Activo', RESEED, 1000);
 
