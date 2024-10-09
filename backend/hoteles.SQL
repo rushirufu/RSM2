@@ -8,7 +8,7 @@ GO
 CREATE DATABASE [2]
 GO
 
-USE [2]
+USE [db_aae172_inventariorsmrd]
 GO
 
 ---- CREAR ESQUEMA
@@ -43,6 +43,15 @@ CREATE TABLE [Compania].[Informacion]
     CONSTRAINT PK_InfoCompany_ID PRIMARY KEY (Id)
 )
 GO
+
+-- TABLE Areas 
+CREATE TABLE Inventario.Area
+(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(100) null
+);
+
+go
 
 -- ACTIVO
 CREATE TABLE [Inventario].[Activo]
@@ -127,7 +136,6 @@ CREATE TABLE [Inventario].[ActivoTipo]
     CONSTRAINT PK_ActivoTipo_ID PRIMARY KEY(Id),
 )
 GO
-
 
 
 CREATE TABLE [Inventario].[ActivoTipoCategoria]
@@ -245,7 +253,6 @@ GO
 
 
 
-
 -- ActivoTipo (Categorias)
 INSERT INTO Inventario.ActivoTipo
     ([Nombre])
@@ -258,7 +265,6 @@ VALUES
     ('Otros');
 
 GO
-
 
 
 INSERT INTO Inventario.ActivoTipoCategoria
@@ -367,14 +373,6 @@ VALUES
     ('Fuera de servicio')
 GO
 
-
-CREATE TABLE Inventario.Area
-(
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre NVARCHAR(100) null
-);
-
-go
 
 INSERT INTO Inventario.Area
     ([Nombre])

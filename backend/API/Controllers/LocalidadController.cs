@@ -34,6 +34,21 @@ public class LocalidadController : ControllerBase
         }
     }
 
+    [HttpGet("listar/")]
+    public async Task<ActionResult<List<DtoLecturaLocalidad>>> ListarLocalidades()
+    {
+        try
+        {
+            List<Localidad> ListaLocalidad = await context.Localidads.OrderBy(x => x.Nombre).ToListAsync();
+            List<DtoLecturaLocalidad> DtoListaLocalidad = mapper.Map<List<DtoLecturaLocalidad>>(ListaLocalidad);
+            return DtoListaLocalidad;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Something wrong happened in the ListarLocalides:", ex);
+        }
+    }
+
 }
 
 

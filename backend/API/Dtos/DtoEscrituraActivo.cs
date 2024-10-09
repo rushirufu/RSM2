@@ -27,5 +27,7 @@ namespace API.Dtos
         public int? IdCondicion { get; set; }
         public string Asignado { get; set; }
         public string Observaciones { get; set; }
+        [Required]
+        public int IdArea { get; set; }
     }
 }
