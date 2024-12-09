@@ -418,8 +418,8 @@ const PageActivoHome = function () {
                     </DivSelect>
                   </DivInput>
 
+                  {/* Localidad */}
                   <DivInput>
-                    {/* Localidad */}
                     <DivSelect>
                       <Label htmlFor="idLocalidad">Localidad:</Label>
                       {Array.isArray(estado_localidad.localidades) ? (
