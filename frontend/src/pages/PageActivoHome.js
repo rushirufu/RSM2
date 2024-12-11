@@ -291,7 +291,7 @@ const PageActivoHome = function () {
     let Data = JSON.stringify(formulario);
     ServicioActivo.Crear(Data);
     ListarActivos();
-    // alert("Activo registrado exitosamente");
+    alert("Activo registrado exitosamente");
     ListarActivos();
   };
 
