@@ -81,17 +81,17 @@ public class ActivoController : ControllerBase
         Activo activo = mapper.Map<Activo>(dto_activo);
         context.Add(activo);
         await context.SaveChangesAsync();
-        ActivoTipoCategorium activoTipoCategorium = context.ActivoTipoCategoria.FirstOrDefault(x => x.Id == activo.IdActivoTipoCategoria);
-        int? Compania = activo.IdDepartamento;
-        int? Departamento = activo.IdDepartamento;
-        int? Localidad = activo.IdLocalidad;
-        int? ActivoTipo = activoTipoCategorium.IdActivoTipo;
-        int? Categoria = activo.IdActivoTipoCategoria;
-        int? Activo = activo.Id;
+        // ActivoTipoCategorium activoTipoCategorium = context.ActivoTipoCategoria.FirstOrDefault(x => x.Id == activo.IdActivoTipoCategoria);
+        // int? Compania = activo.IdDepartamento;
+        // int? Departamento = activo.IdDepartamento;
+        // int? Localidad = activo.IdLocalidad;
+        // int? ActivoTipo = activoTipoCategorium.IdActivoTipo;
+        // int? Categoria = activo.IdActivoTipoCategoria;
+        // int? Activo = activo.Id;
 
-        string CodigoDeBarra = string.Concat(Compania, Departamento, Localidad, Categoria, "-", Activo);
-        activo.IdCodigo = CodigoDeBarra;
-        await context.SaveChangesAsync();
+        // string CodigoDeBarra = string.Concat(Compania, Departamento, Localidad, Categoria, "-", Activo);
+        // activo.IdCodigo = CodigoDeBarra;
+        // await context.SaveChangesAsync();
         DtoLecturaActivo dtoActivo = mapper.Map<DtoLecturaActivo>(activo);
         return new CreatedAtRouteResult("BuscarPorID", new { Id = dtoActivo.Id }, dtoActivo);
     }

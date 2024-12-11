@@ -42,7 +42,7 @@ import ServicioCondicion from "../services/ServicioCondicion";
 
 const PageActivoHome = function () {
   // Campos del formulario
-  const [compania, setCompania] = useState("0");
+  const [compania, setCompania] = useState("1");
   const [departamento, setDepartamento] = useState(0);
   const [localidad, setLocalidad] = useState(0);
   const [area, setArea] = useState(0);
@@ -253,6 +253,23 @@ const PageActivoHome = function () {
 
   const manejadorSumit = function (e) {
     e.preventDefault();
+
+    if (
+      !compania ||
+      compania === "0" ||
+      !departamento ||
+      !localidad ||
+      !activotipocatego ||
+      !marca.trim() ||
+      !modelo.trim() ||
+      !color.trim() ||
+      !serial.trim() ||
+      !area
+    ) {
+      alert("Por favor, complete todos los campos requeridos.");
+      return;
+    }
+
     let formulario = {
       idinformacion: compania,
       iddepartamento: departamento,
@@ -274,14 +291,13 @@ const PageActivoHome = function () {
     let Data = JSON.stringify(formulario);
     ServicioActivo.Crear(Data);
     ListarActivos();
-    alert("Activo registrado exitosamente");
+    // alert("Activo registrado exitosamente");
     ListarActivos();
   };
 
-  const manejadorLimpiar = () => {
-    setCompania(0);
+  const manejadorLimpiar = (e) => {
+    e.preventDefault();
     setDepartamento(0);
-    setUnidad(0);
     setLocalidad(0);
     setActivoTipo(0);
     setActivoTipoCatego(0);
@@ -291,19 +307,13 @@ const PageActivoHome = function () {
     setComponente("");
     setSerial("");
     setObservacion("");
-    setCantidad(1);
-    setArea(0);
+    setArea("");
   };
 
   const columnas = [
     {
-      name: "ID",
+      name: "Codigo  de barra",
       selector: (row) => row.id,
-      sortable: true,
-    },
-    {
-      name: "Codigo",
-      selector: (row) => row.idCodigo,
       sortable: true,
     },
     {
@@ -429,6 +439,7 @@ const PageActivoHome = function () {
                           id="idLocalidad"
                           value={localidad}
                           onChange={manejadorLocalidad}
+                          required={true}
                         >
                           <option key="0" value="0">
                             -- Seleccionar --

@@ -209,7 +209,7 @@ const PageActivoEditar = function () {
         setColor(dataActivo.color);
         setComponente(dataActivo.componentes);
         setObservacion(dataActivo.observaciones);
-        setCodigo(dataActivo.idCodigo);
+        setCodigo(Id);
         setCondicion(dataActivo.idCondicion);
         setAsignado(dataActivo.asignado);
         setArea(dataActivo.idArea);
